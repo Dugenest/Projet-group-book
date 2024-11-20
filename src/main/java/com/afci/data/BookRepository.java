@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 public interface BookRepository extends CrudRepository<Book, Long> {
 
-	Book findNameBookContainingAllIgnoreCase(String nameBook);
+	Book findNameBookContainingAllIgnoreCase(String title);
+
+	Object findTitleBook(String title);
 
 }

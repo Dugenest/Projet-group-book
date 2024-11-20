@@ -36,11 +36,11 @@ public class BookService {
 	}
 
 	// Trouver un livre avec son nom
-	public Book findBookByName(String nameBook) {
-	    Book book = (Book) repository.findNameBookContainingAllIgnoreCase(nameBook);
+	public Book findTitleBook(String title) {
+	    Book book = (Book) repository.findNameBookContainingAllIgnoreCase(title);
 
 	    if (book == null) {
-	        throw new BookNotFoundException("Aucun livre trouvé avec le nom : " + nameBook);
+	        throw new BookNotFoundException("Aucun livre trouvé avec le nom : " + title);
 	    }
 
 	    return book;
@@ -54,18 +54,33 @@ public class BookService {
 
 	    // Vérification des contraintes
 	    if (b.getTitle() == null || b.getTitle().trim().isEmpty()) {
-	        throw new InvalidBookDataException("Le nom du livre ne doit pas être vide !");
+	        throw new InvalidBookDataException("Le titre du livre ne doit pas être vide !");
 	    }
 	    if (b.getAuthor() == null || b.getAuthor().trim().isEmpty()) {
-	        throw new InvalidBookDataException("Le nom du livre ne doit pas être vide !");
+	        throw new InvalidBookDataException("L'auteur du livre ne doit pas être vide !");
 	    }
-	    if (b.getNameBook().length() < 3 || b.getNameBook().length() > 20) { 
-	        throw new InvalidBookDataException("Le nom du livre doit comporter entre 3 et 20 caractères !");
+	    if (b.getCategory() == null || b.getCategory().trim().isEmpty()) {
+	        throw new InvalidBookDataException("La catégorie du livre ne doit pas être vide !");
+	    }
+	    if (b.getIsbnBook() == null || b.getIsbnBook().trim().isEmpty()) {
+	        throw new InvalidBookDataException("L'ISBN du livre ne doit pas être vide !");
+	    }
+	    if (b.getTitle().length() < 1 || b.getTitle().length() > 30) { 
+	        throw new InvalidBookDataException("Le titre du livre doit comporter entre 1 et 30 caractères !");
+	    }
+	    if (b.getAuthor().length() < 2 || b.getAuthor().length() > 20) { 
+	        throw new InvalidBookDataException("L'auteur du livre doit comporter entre 2 et 20 caractères !");
+	    }
+	    if (b.getCategory().length() < 3 || b.getCategory().length() > 20) { 
+	        throw new InvalidBookDataException("La catégorie du livre doit comporter entre 3 et 20 caractères !");
+	    }
+	    if (b.getIsbnBook().length() < 10 || b.getIsbnBook().length() > 13) { 
+	        throw new InvalidBookDataException("L'ISBN du livre doit comporter entre 10 et 13 caractères !");
 	    }
 
 	    // Vérifier si le livre existe déjà par nom
-	    if (repository.findNameBook(b.getNameBook()) != null) {
-	        throw new DuplicateBookException("Le livre avec le nom " + b.getNameBook() + " existe déjà !");
+	    if (repository.findTitleBook(b.getTitle()) != null) {
+	        throw new DuplicateBookException("Le livre avec le nom " + b.getTitle() + " existe déjà !");
 	    }
 
 	    return repository.save(b); // Retourner le livre ajouté
@@ -74,11 +89,11 @@ public class BookService {
 	// Modifier un livre
 	public Book updateBook(Long id, Book newBook) {
 	    return repository.findById(id).map(existingBook -> {
-	        existingBook.setNameBook(newBook.getNameBook());
-	        existingBook.setPriceBook(newBook.getPriceBook());
+	        existingBook.setTitle(newBook.getTitle());
+	        existingBook.setAuthor(newBook.getAuthor());
 
 	        return repository.save(existingBook);
-	    }).orElseThrow(() -> new BookNotFoundException("Livre avec l'id " + id + " n'existe pas !"));
+	    }).orElseThrow(() -> new BookNotFoundException("Le livre avec l'id " + id + " n'existe pas !"));
 	}
 
 	// Supprimer un livre

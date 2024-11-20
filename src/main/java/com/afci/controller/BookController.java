@@ -72,10 +72,10 @@ public class BookController {
 	}
 
 	// Trouver un livre par son nom
-	@GetMapping("/search/{nameBook}")
-	public ResponseEntity<Book> findBookByName(@PathVariable String nameBook) {
+	@GetMapping("/search/{title}")
+	public ResponseEntity<Book> findBookByName(@PathVariable String title) {
 	    try {
-	        Book book = bs.findBookByName(nameBook);
+	        Book book = bs.findTitleBook(title);
 	        return new ResponseEntity<>(book, HttpStatus.OK); // 200 OK pour une recherche réussie
 	    } catch (BookNotFoundException e) {
 	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // 404 si aucun livre trouvé
