@@ -1,10 +1,6 @@
-package com.afci.projet_spring_book.data;
+package com.afci.data;
 
-<<<<<<< HEAD
-public class Book {
-=======
 import java.io.Serializable;
-
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -90,7 +86,5 @@ public class Book implements Serializable {
 	public void setIsbnBook(String isbnBook) {
 		this.isbnBook = isbnBook;
 	}
-    s
->>>>>>> book
 
 }

@@ -1,9 +1,5 @@
-package com.afci.projet_spring_book.controller;
+package com.afci.controller;
 
-<<<<<<< HEAD
-public class BookController {
-
-=======
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -17,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.afci.projet_spring_book.data.Book;
-import com.afci.projet_spring_book.exception.BookNotFoundException;
-import com.afci.projet_spring_book.service.BookService;
+import com.afci.data.Book;
+import com.afci.exception.BookNotFoundException;
+import com.afci.service.BookService;
 
 
 @RestController
@@ -76,10 +72,10 @@ public class BookController {
 	}
 
 	// Trouver un livre par son nom
-	@GetMapping("/search/{nameBook}")
-	public ResponseEntity<Book> findBookByName(@PathVariable String nameBook) {
+	@GetMapping("/search/{title}")
+	public ResponseEntity<Book> findBookByName(@PathVariable String title) {
 	    try {
-	        Book book = bs.findBookByName(nameBook);
+	        Book book = bs.findTitleBook(title);
 	        return new ResponseEntity<>(book, HttpStatus.OK); // 200 OK pour une recherche réussie
 	    } catch (BookNotFoundException e) {
 	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // 404 si aucun livre trouvé
@@ -97,5 +93,4 @@ public class BookController {
 	    }
 	}
 	
->>>>>>> book
 }
