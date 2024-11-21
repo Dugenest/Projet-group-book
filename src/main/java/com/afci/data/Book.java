@@ -2,9 +2,14 @@ package com.afci.data;
 
 import java.io.Serializable;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
+@Entity
 
 public class Book implements Serializable {
 
@@ -16,12 +21,18 @@ public class Book implements Serializable {
 	// Attributs
     private Long idbook;
     private String title;
-    private Author author; // Agrégation vers Author
-    private Category category; // Agrégation vers Category
-    private int dateBook;
+
     private String isbnBook;
-	
     
+    @OneToOne(cascade = CascadeType.ALL)
+    private Author author;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Category category;
+
+	private int dateBook;
+    
+	
     // Constructeur
     public Book() {
     }
@@ -69,7 +80,7 @@ public class Book implements Serializable {
 
 
 	public int getDateBook() {
-		return dateBook;
+		return getDateBook();
 	}
 
 
