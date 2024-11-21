@@ -2,6 +2,7 @@ package com.afci.data;
 
 import java.io.Serializable;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
